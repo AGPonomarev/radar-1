@@ -1,0 +1,1 @@
+.\main.exe -cpuprofile cpu.prof -memprofile mem.prof

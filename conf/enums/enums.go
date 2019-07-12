@@ -1,0 +1,84 @@
+package enums
+
+// Enums ...
+type (
+	LinkedValueChangeMode                            string
+	DefaultDataLockControlMode                       string
+	FullTextSearchUsing                              string
+	UseQuickChoice                                   string
+	FillChecking                                     string
+	DataHistoryUse                                   string
+	CreateOnInput                                    string
+	ChoiceHistoryOnInput                             string
+	FoldersAndItemsUse                               string
+	Indexing                                         string
+	AttributeUse                                     string
+	AllowedSign                                      string
+	AllowedLength                                    string
+	DateFractions                                    string
+	CommandParameterUseMode                          string
+	ButtonRepresentation                             string
+	FormType                                         string
+	TemplateType                                     string
+	AccumulationRegisterType                         string
+	EditType                                         string
+	SearchStringModeOnInputByString                  string
+	ChoiceDataGetModeOnInputByString                 string
+	FullTextSearchOnInputByString                    string
+	BusinessProcessNumberType                        string
+	BusinessProcessNumberPeriodicity                 string
+	CalculationRegisterPeriodicity                   string
+	HierarchyType                                    string
+	SubordinationUse                                 string
+	CatalogCodeType                                  string
+	CatalogCodesSeries                               string
+	CatalogMainPresentation                          string
+	PredefinedDataUpdate                             string
+	ChoiceMode                                       string
+	CharOfAccountCodeSeries                          string
+	AccountMainPresentation                          string
+	ChartOfCalculationTypesCodeType                  string
+	CalculationTypeMainPresentation                  string
+	ChartOfCalculationTypesBaseUse                   string
+	CharacteristicKindCodesSeries                    string
+	CharacteristicTypeMainPresentation               string
+	CommandGroupCategory                             string
+	CommonAttributeAutoUse                           string
+	CommonAttributeDataSeparation                    string
+	CommonAttributeSeparatedDataUse                  string
+	CommonAttributeUsersSeparation                   string
+	CommonAttributeAuthenticationSeparation          string
+	CommonAttributeConfigurationExtensionsSeparation string
+	ReturnValuesReuse                                string
+	CompatibilityMode                                string
+	ClientRunMode                                    string
+	ScriptVariant                                    string
+	MainClientApplicationWindowMode                  string
+	ObjectAutonumerationMode                         string
+	ModalityUseMode                                  string
+	SynchronousPlatformExtensionAndAddInCallUseMode  string
+	InterfaceCompatibilityMode                       string
+	DocumentNumberType                               string
+	DocumentNumberPeriodicity                        string
+	Posting                                          string
+	RealTimePosting                                  string
+	RegisterRecordsDeletion                          string
+	RegisterRecordsWritingOnPost                     string
+	SequenceFilling                                  string
+	DataExchangeMainPresentation                     string
+	SessionReuseMode                                 string
+	InformationRegisterPeriodicity                   string
+	RegisterWriteMode                                string
+	MoveBoundaryOnPosting                            string
+	TaskNumberType                                   string
+	TaskNumberAutoPrefix                             string
+	TaskMainPresentation                             string
+	TransferDirection                                string
+)
+
+// Form enums ...
+type (
+	VerticalFormScroll     string
+	FormWindowOpeningMode  string
+	ItemHorizontalLocation string
+)
