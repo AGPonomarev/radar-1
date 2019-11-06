@@ -1,6 +1,8 @@
 package conf
 
-import "encoding/xml"
+import (
+	"encoding/xml"
+)
 
 //import "github.com/tsukanov-as/radar/conf/enums"
 
@@ -800,7 +802,7 @@ type InputField struct {
 	TextEdit                   bool
 	EditTextUpdate             string //Enums.EditTextUpdate;
 	//MinValue "";MaxValue ""; MDObjectRef
-	ChoiceParameterLinks          *ItemChoiceParameterLinks
+	ChoiceParameterLinks          *ChoiceParameterLinks
 	ChoiceParameters              *ChoiceParameters
 	AvailableTypes                *TypeDescription
 	ListChoiceMode                bool
@@ -1298,33 +1300,10 @@ type Picture struct {
 	_   base64Binary
 }
 
-// ItemChoiceParameterLinks ...
-type ItemChoiceParameterLinks struct {
-	item []*FromChoiceParameterLink
-}
-
-// FromChoiceParameterLink ...
-type FromChoiceParameterLink struct {
-	choiceParameter string
-	value           *Field
-	//mode ""; // ChoiceParameterLink()
-}
-
-// ChoiceParameters ...
-type ChoiceParameters struct {
-	item []*ChoiceParameter
-}
-
-// ChoiceParameter ...
-type ChoiceParameter struct {
-	choiceParameter string
-	//value ""; // ChoiceParameter()
-}
-
 // ItemTypeLink ...
 type ItemTypeLink struct {
-	field    *Field
-	linkItem Decimal
+	DataPath *string
+	LinkItem Decimal
 }
 
 // AdjustableBoolean ...

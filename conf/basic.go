@@ -61,7 +61,7 @@ type FieldListItem struct {
 
 // ChoiceParameterLinks ...
 type ChoiceParameterLinks struct {
-	Link ChoiceParameterLink
+	Link []*ChoiceParameterLink
 }
 
 // ChoiceParameterLink ...
@@ -69,6 +69,17 @@ type ChoiceParameterLink struct {
 	Name        string
 	DataPath    string
 	ValueChange enums.LinkedValueChangeMode
+}
+
+// ChoiceParameters ...
+type ChoiceParameters struct {
+	item []*ChoiceParameter
+}
+
+// ChoiceParameter ...
+type ChoiceParameter struct { // TODO: сделать
+	choiceParameter string
+	//value ""; // ChoiceParameter()
 }
 
 // TypeLink ...

@@ -240,7 +240,7 @@ scan:
 			p.next()
 			p.skipWhitespace()
 			if !isLetter(p.chr) {
-				p.error("error: expected directive")
+				p.error("error: expected preprocessor")
 			}
 			p.lit = p.scanIdentifier()
 			p.tok = tokens.LookupPrepInst(p.lit)

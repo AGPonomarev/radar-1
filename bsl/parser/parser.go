@@ -375,7 +375,7 @@ func (p *Parser) parseMethodDecl() *ast.MethodDecl {
 	} else {
 		p.expect(tokens.ENDPROCEDURE)
 	}
-	var auto []*ast.Item
+	var auto []*ast.AutoDecl
 	for _, obj := range p.scope.Auto {
 		auto = append(auto, obj)
 	}
@@ -717,7 +717,7 @@ func (p *Parser) parseNewExpr() ast.Expr {
 func (p *Parser) parseIdentExpr(allowNewVar bool) (expr *ast.IdentExpr, newvar *ast.Item, call bool) {
 	pos, line := p.begpos, p.curline
 	name := p.lit
-	autoPlace := &ast.Place{
+	autoPlace := ast.Place{
 		Pos:     p.begpos,
 		Len:     p.curpos - p.begpos,
 		BegLine: p.curline,
@@ -741,7 +741,7 @@ func (p *Parser) parseIdentExpr(allowNewVar bool) (expr *ast.IdentExpr, newvar *
 				item = &ast.Item{Name: name, Decl: nil}
 				p.unknown[nameLower] = item
 				callSites := []*ast.Place{}
-				callSites = append(callSites, autoPlace)
+				callSites = append(callSites, &autoPlace)
 				p.callSites[item] = callSites
 			}
 		}
@@ -756,7 +756,7 @@ func (p *Parser) parseIdentExpr(allowNewVar bool) (expr *ast.IdentExpr, newvar *
 		item = p.scope.Find(name)
 		if item == nil {
 			if allowNewVar {
-				item = &ast.Item{Name: name, Decl: nil} // TODO: AutoDecl
+				item = &ast.Item{Name: name, Decl: &ast.AutoDecl{Name: name, Place: autoPlace}}
 				newvar = item
 			} else {
 				item = &ast.Item{Name: name, Decl: nil}
@@ -998,7 +998,7 @@ func (p *Parser) parseRaiseStmt() *ast.RaiseStmt {
 		expr = p.parseExpression()
 	}
 	return &ast.RaiseStmt{
-		Expr: &expr, // TODO: may be nil
+		Expr: expr,
 		Place: ast.Place{
 			Pos:     pos,
 			Len:     p.endpos - pos,
@@ -1042,7 +1042,9 @@ func (p *Parser) parseAssignOrCallStmt() (stmt ast.Stmt) {
 		if newvar != nil {
 			nameLower := strings.ToLower(newvar.Name)
 			p.vars[nameLower] = newvar
-			p.scope.Auto = append(p.scope.Auto, newvar)
+			if decl, ok := newvar.Decl.(*ast.AutoDecl); ok {
+				p.scope.Auto = append(p.scope.Auto, decl)
+			}
 		}
 		stmt = &ast.AssignStmt{
 			Left:  left,
@@ -1065,9 +1067,9 @@ func (p *Parser) parseIfStmt() *ast.IfStmt {
 	p.expect(tokens.THEN)
 	p.scan()
 	thenpart := p.parseStatements()
-	var elsifpart *[]*ast.ElsIfStmt
+	var elsifpart []*ast.ElsIfStmt
 	if p.tok == tokens.ELSIF {
-		elsifpart = &[]*ast.ElsIfStmt{}
+		elsifpart = []*ast.ElsIfStmt{}
 		for p.tok == tokens.ELSIF {
 			pos, line := p.begpos, p.curline
 			p.scan()
@@ -1075,7 +1077,7 @@ func (p *Parser) parseIfStmt() *ast.IfStmt {
 			p.expect(tokens.THEN)
 			p.scan()
 			elsifthen := p.parseStatements()
-			*elsifpart = append(*elsifpart, &ast.ElsIfStmt{
+			elsifpart = append(elsifpart, &ast.ElsIfStmt{
 				Cond: elsifcond,
 				Then: elsifthen,
 				Place: ast.Place{
@@ -1188,7 +1190,9 @@ func (p *Parser) parseForStmt() *ast.ForStmt {
 	if newvar != nil {
 		nameLower := strings.ToLower(newvar.Name)
 		p.vars[nameLower] = newvar
-		p.scope.Auto = append(p.scope.Auto, newvar)
+		if decl, ok := newvar.Decl.(*ast.AutoDecl); ok {
+			p.scope.Auto = append(p.scope.Auto, decl)
+		}
 	}
 	p.expect(tokens.DO)
 	p.scan()
@@ -1223,7 +1227,9 @@ func (p *Parser) parseForEachStmt() *ast.ForEachStmt {
 	if newvar != nil {
 		nameLower := strings.ToLower(newvar.Name)
 		p.vars[nameLower] = newvar
-		p.scope.Auto = append(p.scope.Auto, newvar)
+		if decl, ok := newvar.Decl.(*ast.AutoDecl); ok {
+			p.scope.Auto = append(p.scope.Auto, decl)
+		}
 	}
 	p.expect(tokens.DO)
 	p.scan()
